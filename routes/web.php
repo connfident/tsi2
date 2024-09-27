@@ -5,7 +5,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\UsuarioController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
