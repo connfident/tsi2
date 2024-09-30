@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nombre_proveedor', 255);
             $table->string('direccion', 255)->nullable();
             $table->string('telefono', 20)->nullable();
-            $table->string('correo', 100)->nullable();
+            $table->string('email', 100)->nullable();
         });
     }
 

@@ -9,7 +9,7 @@ class Proveedor extends Model
 {
     protected $table = 'proveedores';
     protected $primaryKey = 'cod_proveedor';
-    protected $fillable = ['nombre_proveedor', 'direccion', 'telefono', 'correo'];
+    protected $fillable = ['nombre_proveedor', 'direccion', 'telefono', 'email'];
 
     // Relación de un proveedor con muchas compras
     public function compras()

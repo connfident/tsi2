@@ -1,15 +1,17 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\UsuarioController;
 
 Route::get('/', function () {
-    return view('home');
+    return redirect()->route('home'); // Redirigir a la ruta de home
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::resource('productos', ProductoController::class);
+
 
 Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
 Route::get('/productos/{id}', [ProductoController::class, 'show'])->name('productos.show');
@@ -18,11 +20,18 @@ Route::put('/productos/{id}', [ProductoController::class, 'update'])->name('prod
 Route::delete('/productos/{id}', [ProductoController::class, 'destroy'])->name('productos.destroy');
 
 Route::middleware('guest')->group(function () {
-    Route::get('/login', [UsuarioController::class, 'create'])->name('login');
-    Route::post('/login', [UsuarioController::class, 'store']);
+    Route::get('/login', [UsuarioController::class, 'mostrarLogin'])->name('login'); // Cambiado a showLoginForm
+    Route::post('/login', [UsuarioController::class, 'login']);
     
-    Route::get('/register', [UsuarioController::class, 'create'])->name('register');
-    Route::post('/register', [UsuarioController::class, 'store']);
+    Route::get('/registrar', [UsuarioController::class, 'create'])->name('registrar');
+    Route::post('/registrar', [UsuarioController::class, 'store'])->name('registrar.store');
 });
 
-Route::post('/logout', [UsuarioController::class, 'destroy'])->name('logout');
+// Ruta para ver un usuario específico
+Route::get('/usuarios/{id}', [UsuarioController::class, 'show'])->name('usuarios.show');
+
+// Rutas protegidas para usuarios autenticados
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [UsuarioController::class, 'logout'])->name('logout');
+});
+

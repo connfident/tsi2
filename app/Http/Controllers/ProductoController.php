@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth'); // Protege todas las acciones de este controlador
+    }
+    
     public function index()
     {
         $productos = Producto::all();
@@ -22,6 +28,11 @@ class ProductoController extends Controller
         return response()->json(['error' => 'Producto no encontrado'], 404);
     }
 
+    public function create()
+    {
+        $categorias = Categoria::all(); // Asegúrate de tener el modelo Categoria
+        return view('productos.create', compact('categorias')); // Asegúrate de tener una vista 'productos.create' para el formulario de creación
+    }
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -54,5 +65,11 @@ class ProductoController extends Controller
             return response()->json(['success' => 'Producto eliminado correctamente']);
         }
         return response()->json(['error' => 'Producto no encontrado'], 404);
+    }
+
+    public function mostrarProductos()
+    {
+        $productos = Producto::all(); // Obtener todos los productos
+        return view('home', compact('productos')); // Pasar los productos a la vista
     }
 }

@@ -28,7 +28,7 @@ class ProveedorController extends Controller
             'nombre_proveedor' => 'required|string|max:255',
             'direccion' => 'nullable|string|max:255',
             'telefono' => 'nullable|string|max:20',
-            'correo' => 'nullable|string|email|max:100'
+            'email' => 'nullable|string|email|max:100'
         ]);
 
         $proveedor = Proveedor::create($request->all());
