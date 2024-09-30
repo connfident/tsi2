@@ -15,7 +15,7 @@
                             <label for="rol" class="col-md-4 col-form-label text-md-end">{{ __('Rol') }}</label>
 
                             <div class="col-md-6">
-                                <input id="rol" type="text" class="form-control @error('rol') is-invalid @enderror" name="rol" required>
+                                <input id="rol" type="text" class="form-control @error('rol') is-invalid @enderror" name="rol">
 
                                 @error('rol')
                                     <span class="invalid-feedback" role="alert">
@@ -29,11 +29,11 @@
                             <label for="nom_usuario" class="col-md-4 col-form-label text-md-end">{{ __('Nombre de Usuario') }}</label>
 
                             <div class="col-md-6">
-                                <input id="nom_usuario" type="text" class="form-control @error('nom_usuario') is-invalid @enderror" name="nom_usuario" value="{{ old('nom_usuario') }}" required autocomplete="nom_usuario" autofocus>
+                                <input id="nom_usuario" type="text" class="form-control @error('nom_usuario') is-invalid @enderror" name="nom_usuario" value="{{ old('nom_usuario') }}" autocomplete="nom_usuario" autofocus>
 
                                 @error('nom_usuario')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{ 'El campo de usuario es obligatorio' }}</strong>
                                     </span>
                                 @enderror
                             </div>
@@ -43,7 +43,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -57,7 +57,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Contraseña') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -71,7 +71,13 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirmar Contraseña') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <input id="password-confirm" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" autocomplete="new-password">
+
+                                @error('password_confirmation')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
 

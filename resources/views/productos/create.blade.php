@@ -11,9 +11,18 @@
                     <form method="POST" action="{{ route('productos.store') }}">
                         @csrf
 
+                        @if($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <div class="row mb-3">
                             <label for="nom_producto" class="col-md-4 col-form-label text-md-end">{{ __('Nombre del Producto') }}</label>
-
                             <div class="col-md-6">
                                 <input id="nom_producto" type="text" class="form-control @error('nom_producto') is-invalid @enderror" name="nom_producto" value="{{ old('nom_producto') }}" required>
 
@@ -45,24 +54,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="descripcion" class="col-md-4 col-form-label text-md-end">{{ __('Descripción') }}</label>
-
-                            <div class="col-md-6">
-                                <textarea id="descripcion" class="form-control @error('descripcion') is-invalid @enderror" name="descripcion" rows="3">{{ old('descripcion') }}</textarea>
-
-                                @error('descripcion')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
                             <label for="precio_unitario" class="col-md-4 col-form-label text-md-end">{{ __('Precio Unitario') }}</label>
 
                             <div class="col-md-6">
-                                <input id="precio_unitario" type="number" step="0.01" class="form-control @error('precio_unitario') is-invalid @enderror" name="precio_unitario" value="{{ old('precio_unitario') }}">
+                                <input id="precio_unitario" type="number" step="0.01" min="1" class="form-control @error('precio_unitario') is-invalid @enderror" name="precio_unitario" value="{{ old('precio_unitario') }}">
 
                                 @error('precio_unitario')
                                     <span class="invalid-feedback" role="alert">

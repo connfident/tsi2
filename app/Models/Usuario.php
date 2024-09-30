@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable; // Asegúrate de importar esto
 use Illuminate\Notifications\Notifiable;
 
+
 class Usuario extends Authenticatable // Cambiar Model a Authenticatable
 {
     use HasFactory, Notifiable; // No olvides usar HasFactory y Notifiable
@@ -36,4 +37,6 @@ class Usuario extends Authenticatable // Cambiar Model a Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    
 }

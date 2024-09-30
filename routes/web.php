@@ -34,4 +34,3 @@ Route::get('/usuarios/{id}', [UsuarioController::class, 'show'])->name('usuarios
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [UsuarioController::class, 'logout'])->name('logout');
 });
-

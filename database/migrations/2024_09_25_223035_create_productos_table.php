@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('productos', function (Blueprint $table) {
             $table->id('cod_producto');
             $table->string('nom_producto', 255);
-            $table->decimal('precio_unitario', 10, 2)->nullable();
+            $table->integer('precio_unitario')->nullable();
             $table->integer('stock_actual')->nullable();
             $table->integer('stock_critico')->nullable();
             $table->unsignedBigInteger('cod_categoria')->nullable();

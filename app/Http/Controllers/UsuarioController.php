@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Usuario;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreUsuarioRequest;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
 {
@@ -24,20 +26,16 @@ class UsuarioController extends Controller
         return response()->json(['error' => 'Usuario no encontrado'], 404);
     }
 
-    public function store(Request $request)
+    public function store(StoreUsuarioRequest $request)
     {
-        $this->validate($request, [
-            'nom_usuario' => 'required|string|max:100',
-            'email' => 'required|string|email|max:100',
-            'password' => 'required|string|min:6',
-            'rol' => 'required|string|max:50'
-        ]);
+        // Obtener los datos validados del request
+        $data = $request->validated();
 
         // Hashear la contraseña
-        $request['password'] = Hash::make($request['password']);
+        $data['password'] = Hash::make($request->password);
 
-        // Crear el usuario
-        $usuario = Usuario::create($request->all());
+        // Crear el usuario con la contraseña hasheada
+        $usuario = Usuario::create($data);
 
         return redirect()->route('home')->with('success', 'Registro exitoso. Bienvenido!');
     }
@@ -46,7 +44,17 @@ class UsuarioController extends Controller
     {
         $usuario = Usuario::find($id);
         if ($usuario) {
-            $usuario->update($request->all());
+            // Obtener los datos del request
+            $data = $request->all();
+
+            // Solo hashear si se proporciona una nueva contraseña
+            if ($request->filled('password')) {
+                $data['password'] = Hash::make($request->password);
+            }
+
+            // Actualizar el usuario con los datos proporcionados
+            $usuario->update($data);
+
             return response()->json($usuario);
         }
         return response()->json(['error' => 'Usuario no encontrado'], 404);
@@ -67,20 +75,16 @@ class UsuarioController extends Controller
         return view('auth.register'); 
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $this->validate($request, [
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
-    
         // Comprobar si el usuario existe
         $user = Usuario::where('email', $request->email)->first();
         if (!$user) {
             return back()->withErrors(['email' => 'No se encontró un usuario con ese email.']);
         }
     
-        if (auth()->attempt(['email' => $request->email, 'password' => $request->password], )) {
+        // Intentar iniciar sesión
+        if (auth()->attempt($request->only('email', 'password'))) {
             return redirect()->intended('/home')->with('success', 'Has iniciado sesión correctamente.');
         }
     
