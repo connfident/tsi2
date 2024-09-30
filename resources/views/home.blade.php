@@ -18,7 +18,7 @@
             <div class="card text-white bg-success mb-4">
                 <div class="card-body">
                     <h5 class="card-title">Compras/Stock</h5>
-                    <h2 class="card-text">+ 10</h2>
+                    <h2 class="card-text">+ 11</h2>
                     <a href="#" class="btn btn-light">Ver Stock</a>
                 </div>
             </div>
