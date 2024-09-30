@@ -19,7 +19,6 @@ Route::post('/productos', [ProductoController::class, 'store'])->name('productos
 Route::put('/productos/{id}', [ProductoController::class, 'update'])->name('productos.update');
 Route::delete('/productos/{id}', [ProductoController::class, 'destroy'])->name('productos.destroy');
 
-
 Route::middleware('guest')->group(function () {
     Route::get('/login', [UsuarioController::class, 'mostrarLogin'])->name('login'); // Cambiado a showLoginForm
     Route::post('/login', [UsuarioController::class, 'login']);
